@@ -1,0 +1,45 @@
+{% extends 'list/base.html' %}
+
+{% block title %} Home - To Do List {% endblock %}
+
+{% block content %}
+
+<h1> To Do List</h1>
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <div class="alert alert-warning alert-dismissable" role="alert">
+            <button class="close" data-dismiss="alert">
+                <small><sup>x</sup></small>
+            </button>
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+<br>
+{% if todo %}
+<table class="table table-bordered">
+    {% for thing in todo %}
+    {% if thing.completed %}
+    <tr class="table-secondary">
+        <td class="striker"><a href="{% url 'edit' thing.id %}">{{ thing.item }}</a></td>
+        <td><center><a href="{% url 'uncross' thing.id %}">Uncross</a></center></td>
+        <td><center><a href="{% url 'delete' thing.id %}">Delete</a></center></td>
+    </tr>
+    {% else %}
+    <tr>
+            <td><a href="{% url 'edit' thing.id %}">{{ thing.item }}</a></td>
+            <td><center><a href="{% url 'cross_off' thing.id %}">Cross Off</a></center></td>
+            <td><center><a href="{% url 'delete' thing.id %}">Delete</a></center></td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
